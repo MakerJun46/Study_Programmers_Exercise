@@ -6,14 +6,14 @@ using namespace std;
 int solution(int n, vector<int> lost, vector<int> reserve) {
     int answer = 0;
     vector<int> student;
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
         student.push_back(1);
     }
     for (auto i : lost) {
-        student[i-1]--;
+        student[i - 1]--;
     }
     for (auto i : reserve) {
-        student[i-1]++;
+        student[i - 1]++;
     }
     for (int i = 0; i < n; i++) {
         if (student[i] == 0) {
