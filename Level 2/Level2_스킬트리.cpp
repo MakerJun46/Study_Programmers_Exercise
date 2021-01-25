@@ -1,32 +1,34 @@
 ﻿#include <string>
 #include <vector>
-#include "library.h"
+#include <iostream>
 
 using namespace std;
 
 int solution(string skill, vector<string> skill_trees) {
     int answer = 0;
-    vector<char> skill_Index;
-    
+    vector<char> skill_index;
+
     for (int i = 0; i < skill_trees.size(); i++) {
-        for (int j = 0; j < skill.size(); j++) {
-            int index = skill_trees[i].find(skill[j]);
-            skill_Index.push_back(skill_trees[i][index]);
+        for (auto j : skill_trees[i]) {
+            int tmp = skill.find(j);
+            if(tmp != string::npos)
+                skill_index.push_back(skill[tmp]);
         }
-        if (skill_Index.empty()) {
+        if (skill_index.empty()) {
             answer++;
             continue;
         }
         bool isPossible = true;
-        for (int j = 0; j < skill_Index.size(); j++) {
-            if (skill[j] != skill_Index[j]) {
-                isPossible = false;
-                break;
+        for (int j = 0; j < skill_index.size(); j++) {
+            if (skill[j] != skill_index[j]) {
+               isPossible = false;
+               break;
             }
         }
-        if (isPossible)
+        if (isPossible) {
             answer++;
-        skill_Index.clear();
+        }
+        skill_index.clear();
     }
     return answer;
 }
@@ -38,7 +40,7 @@ int main() {
     cout << solution("REA", { "REA", "POA" }); // 1
     cout << solution("CBDK", { "CB", "CXYB", "BD", "AECD", "ABC", "AEX", "CDB", "CBKD", "IJCB", "LMDK" }); // 4
     cout << solution("BDC", { "AAAABACA" }); // 0
-    cout << solution("CBD", { "C", "D", "CD", "BDA" }); // 2
+    cout << solution("CBD", { "C", "D", "CD", "BDA" }); // 1
 
     return 0;
 }
