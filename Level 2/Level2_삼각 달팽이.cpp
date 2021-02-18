@@ -1,49 +1,49 @@
 ﻿#include <string>
 #include <vector>
-#include "library.h"
+#include <iostream>
 
 using namespace std;
 
 vector<int> solution(int n) {
     vector<int> answer;
-    vector<vector<int>> stair(n + 1);
-    int count = 1;
-    int stairIndex = 0;
-    vector<int>::iterator itLeft;
+    vector<vector<int>> position(n, vector<int>(n));
+    int x = 0;
+    int y = -1;
+    int k = 0;
+    int count = 0;
 
-    for (int k = 1; k > 0; k++) {
-        if (n <= 0) {
-            break;
-        }
-        if (k % 3 == 1) {
+    while (n >= 0) {
+        k++;
+        if (k % 3 == 1) { // 내려가는 +
             for (int i = 0; i < n; i++) {
-                stairIndex++;
-                stair[stairIndex].insert(indexLeft[stairIndex], count);
-                indexLeft[stairIndex] ++;
+                y++;
                 count++;
+                position[x][y] = count;
             }
-            n--;
         }
         else if (k % 3 == 2) {
             for (int i = 0; i < n; i++) {
-                stair[stairIndex].insert(indexLeft[stairIndex]++,count);
+                x++;
                 count++;
+                position[x][y] = count;;
             }
-            n--;
         }
         else {
             for (int i = 0; i < n; i++) {
-                stairIndex--;
-                stair[stairIndex].insert(indexRight[stairIndex]--, count);
+                x--;
+                y--;
                 count++;
+                position[x][y] = count;
             }
-            n--;
         }
+        n--;
     }
 
-    for (auto i : stair) {
-        for (auto j : i) {
-            answer.push_back(j);
+    for (int i = 0; i < position.size(); i++) {
+        for (int j = 0; j < position.size(); j++) {
+            if (position[j][i] != NULL) {
+                answer.push_back(position[j][i]);
+            }
         }
     }
 
@@ -51,7 +51,7 @@ vector<int> solution(int n) {
 }
 
 int main() {
-
+    
     for (auto i : solution(6)) {
         cout << i << " ";
     }
