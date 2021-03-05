@@ -10,16 +10,37 @@ int solution(string s) {
     if (s.length() == 1)
         return 1;
 
-    for (int i = 1; i <= s.length() / 2; i++) 
+    for (int i = 1; i < s.length() / 2; i++) 
     {
-        vector<string> cmpSt;
+        int count = 1;
+        string cmpSt = s.substr(0, i);
+        string cmp, cp;
+
         for (int j = i; j < s.length(); j += i)
         {
-            cmpSt.push_back(s.substr(j, i));
+            cmp = s.substr(j, i);
+
+            if (cmpSt == cmp) 
+            {
+                count++;
+            }
+            else
+            {
+                if (count == 1)
+                {
+                    cp += cmpSt;
+                    cmpSt = cmp;
+                }
+                else
+                {
+                    cp = cp + to_string(count) + cmpSt;
+                }
+            
+            }
         
         }
-    }
 
+    }
 
 
     /*
