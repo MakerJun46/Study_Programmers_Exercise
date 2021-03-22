@@ -33,6 +33,7 @@ int solution(vector<int> nums) {
         sort(vecTemp.begin(), vecTemp.end());
         if (isPrime(temp))
         {
+            cout << "여기";
             result.insert(make_pair(vecTemp, temp));
         }
         vecTemp.clear();
