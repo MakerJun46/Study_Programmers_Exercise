@@ -15,7 +15,4 @@ def solution(numbers):
 
 #return sorted(list(set(answer))) .. sorted(iterator, data, reverse) => 정렬된 자료형 반환
 
-
-
-
 print(solution([1,2,3,4]))
