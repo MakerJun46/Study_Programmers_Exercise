@@ -1,75 +1,107 @@
 ﻿#include <string>
 #include <vector>
-#include "library.h"
+#include <algorithm>
+#include <iostream>
 
 using namespace std;
 
-bool cmpFirst(pair<long long, long long> a, pair<long long, long long> b)
+bool isNotZero(string n) 
 {
-    return a.first > b.first;
+    return n != "0";
 }
 
-bool cmpSecond(pair<long long, long long> a, pair<long long, long long> b)
-{
-    return a.second > b.second;
+bool cmp(string a, string b) {
+    a += a;
+    b += b;
+
+    bool isABigThanB = a.length() > b.length();
+
+    if(isABigThanB) // a.length() > b.length()
+    {
+        int size = a.length() - b.length();
+        int bLength = b.length();
+
+        for (int i = 0; i < size; i++)
+        {
+            b += b[i % bLength];
+        }
+    }
+    else
+    {
+        int size = b.length() - a.length();
+        int aLength = a.length();
+
+        for (int i = 0; i < size; i++)
+        {
+            a += a[i % aLength];
+        }
+    }
+
+    return a + b > b + a;
 }
 
 string solution(vector<int> numbers) {
-	string answer = "";
-
-    long long maxFront;
-    long long maxBack;
-	
-    vector<pair<long long, long long>> MaxnumVec;
-
-    sort(numbers.begin(), numbers.end());
+    vector<string> numStr;
+    string answer = "";
 
     for (auto i : numbers)
     {
-        answer += to_string(i);
+        numStr.push_back(to_string(i));
     }
 
+    sort(numStr.begin(), numStr.end(), cmp);
 
-    do
+    if (find_if(numStr.begin(), numStr.end(), isNotZero) == numStr.end())
+        return "0";
+
+    for (auto i : numStr)
     {
-        string tempFront = "";
-        string tempBack = "";
-        for (int i = 0; tempFront.length() < answer.length() / 2; i++)
-        {
-            tempFront += to_string(numbers[i]);
-        }
-
-        for (int i = numbers.size(); i < numbers.size(); i++)
-        {
-            tempBack += to_string(numbers[i]);
-        }
-
-        MaxnumVec.push_back(pair<long long, long long>(stoll(tempFront), stoll(tempBack)));
-
-    } while (next_permutation(numbers.begin(), numbers.end()));
-
-    sort(MaxnumVec.begin(), MaxnumVec.end(), cmpFirst);
-
-    bool ismaxnumFront = true;
-    long long maxnumFront = MaxnumVec[0].first;
-    for (int i = 0; i < MaxnumVec.size() && ismaxnumFront; i++)
-    {
-        if (maxnumFront != MaxnumVec[i].first)
-        {
-            MaxnumVec.erase(MaxnumVec.begin() + i, MaxnumVec.end());
-            ismaxnumFront = false;
-        }
+        answer += i;
     }
-    sort(MaxnumVec.begin(), MaxnumVec.end(), cmpSecond);
 
-    answer = to_string(MaxnumVec.at(0).first) + to_string(MaxnumVec.at(0).second);
-		
-	return answer;
+    return answer;
 }
 
 int main() {
+    
+    cout << solution({ 6, 10, 2 }) << endl;
+    cout << solution({ 0,0,0,0 }) << endl;
+    cout << solution({ 21,212, 21 }) << endl;
+    cout << solution({ 1000, 0, 5, 99, 100 }) << endl;
+    cout << solution({ 402212, 12 }) << endl;
+    cout << solution({ 40, 404 }) << endl;
+    
 
-    cout << solution({3,30,34,5,9});
+    cout << solution({ 10,0,0,1,2,3,4,5,6,7,8,9,10});
 
-	return 0;
+    return 0;
 }
+
+
+/*  BestAnswer
+bool compare(const string &a, const string &b)
+{
+    if (b + a < a + b)
+        return true;
+    return false;
+}
+
+string solution(vector<int> numbers) {
+    string answer = "";
+
+    vector<string> strings;
+
+    for (int i : numbers)
+        strings.push_back(to_string(i));
+
+    sort(strings.begin(), strings.end(), compare);
+
+    for (auto iter = strings.begin(); iter < strings.end(); ++iter)
+        answer += *iter;
+
+    if (answer[0] == '0')
+        answer = "0";
+
+    return answer;
+}
+*/
