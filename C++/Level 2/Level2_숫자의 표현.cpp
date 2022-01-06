@@ -1,24 +1,31 @@
-#include <string>
+﻿#include <string>
 #include <vector>
 #include <iostream>
 
 using namespace std;
 
 int solution(int n) {
-    int num = (n + 1) / 2;
-    int sum = 0, answer = 1, j = 1;
+    int answer = 1;
 
-    for (int i = 1; i <= num; i++) {
-        sum += i;
-        if (sum >= n) {
-            while (sum > n) sum -= j++;
-            if (sum == n) answer++;
+    for (int i = 1; i < n / 2 + 1; i++)
+    {
+        int sum_tmp = 0;
+
+        for (int j = i;; j++)
+        {
+            sum_tmp += j;
+            
+            if (sum_tmp == n)
+                answer++;
+            else if (sum_tmp > n)
+                break;
         }
     }
 
     return answer;
 }
-void main()
+
+int main()
 {
     cout << solution(15) << endl;
 }
